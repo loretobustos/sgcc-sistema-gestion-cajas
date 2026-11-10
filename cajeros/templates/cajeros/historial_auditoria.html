@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bitácora de Auditoría e Historial - SGCC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Bitácora de Auditoría e Historial (Inmutable)</h2>
+        <div>
+            <a href="{% url 'exportar_csv' %}" class="btn btn-success fw-bold me-2">EXPORTAR REPORTE CSV</a>
+            <a href="{% url 'listado_cajeros' %}" class="btn btn-secondary">Volver al Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Tabla de Registros -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white fw-bold">
+            Registros Históricos de Operaciones
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0 align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Marca Temporal</th>
+                        <th>ID Admin</th>
+                        <th>Caja</th>
+                        <th>Acción</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reg in registros %}
+                    <tr>
+                        <td>{{ reg.timestamp|date:"d/m/Y H:i:s" }}</td>
+                        <td>{{ reg.id_admin_responsable }}</td>
+                        <td>Caja {{ reg.id_cajero|stringformat:"02d" }}</td>
+                        <td><span class="badge bg-secondary">{{ reg.accion }}</span></td>
+                        <td>{{ reg.detalle }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">No hay registros en la bitácora de auditoría.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

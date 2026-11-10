@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Registro - SGCC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="p-4 container" style="max-width: 500px;">
+    <div class="alert alert-danger shadow-sm mt-5">
+        {% if tipo == "Jefatura" %}
+            <h4>¿Eliminar Jefatura/Supervisor #{{ jefatura.id_jefatura }}?</h4>
+            <p>Esta acción eliminará a <strong>{{ jefatura.nombre }} {{ jefatura.apellido }}</strong> del sistema.</p>
+        {% else %}
+            <h4>¿Cerrar Turno / Liberar Caja #{{ cajero.id_cajero }}?</h4>
+            <p>Esta acción finalizará el turno operativo y dejará la caja en estado inactivo (Rojo).</p>
+        {% endif %}
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            
+            <!-- Campo obligatorio para la validación de jefatura (Rango 1120 - 1140) -->
+            <div class="mb-3">
+                <label for="id_admin" class="form-label fw-bold text-dark">ID Administrador / Jefatura (1120 - 1140):</label>
+                <input type="number" name="id_admin" id="id_admin" class="form-control" min="1120" max="1140" required placeholder="Ej: 1125">
+                <div class="form-text text-muted">Ingrese su credencial autorizada para confirmar la operación.</div>
+            </div>
+
+            <button type="submit" class="btn btn-danger fw-bold">Sí, Confirmar Cierre</button>
+            <a href="{% url 'listado_cajeros' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

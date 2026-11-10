@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cierre General de Jornada - SGCC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="p-4 container" style="max-width: 500px;">
+    <div class="alert alert-danger shadow-sm mt-5">
+        <h4 class="fw-bold">⚠️ Ejecutar Cierre General de Turnos</h4>
+        <p>Esta acción finalizará <strong>simultáneamente</strong> todas las cajas que se encuentren activas o en colación, dejándolas en estado inactivo (Rojo)[cite: 3, 7].</p>
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            <div class="mb-3 text-start">
+                <label for="id_admin" class="form-label fw-bold text-dark">Confirme su ID de Supervisor (1120 - 1140):</label>
+                <input type="number" name="id_admin" id="id_admin" class="form-control" min="1120" max="1140" required placeholder="Ej: 1125">
+            </div>
+
+            <button type="submit" class="btn btn-danger fw-bold">Confirmar Cierre General</button>
+            <a href="{% url 'listado_cajeros' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
